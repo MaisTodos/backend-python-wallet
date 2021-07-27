@@ -7,6 +7,7 @@ Desafio para vaga de backend na MaisTodos
 Desafio técnico `Python`
 ========================
 
+
 Alguns requisitos
 -----------------
   - Deixe o código em inglês;
@@ -17,15 +18,26 @@ Alguns requisitos
   - Crie um repositório público e nos passe o link para acompanharmos o desenvolvimento;
   - Faça testes;
 
+
 Problema
 --------
 
 Uma grande rede varegista do ramo alimentício, irá utilizar a carteira digital da MaisTODOS para dar cashback para os seus clientes e gerar vendas campanhas, etc.
 Então basicamente vamos precisar de uma API para fazer o gerenciamento desses valores (Salvar, logs, auth) e repassar para a nossa API de cashback para dar ao cliente o valor do benefício de fato.
 
-Basicamente funcionaria assim:
+Na API, ficaria toda a lógica de aplicação do cashback (percentual, e regras por tipo de produto)
 
-1 - ERP do varegista chama esta API com o formato:
+Vamos deixar alguns modelos de API e schema, mais não são obrigatórios.
+
+
+Fluxograma
+----------
+
+1 - ERP do varegista chama esta API a ser construída com esta sugestão de json e url:
+
+```
+POST /api/cashback 
+```
 
 ```shell
 {
@@ -55,10 +67,16 @@ Onde:
 - products -> type: é a classificação do produto, você irá definir os valores mais podemos usar (A, B, C)
 - products -> type: é o valor unitário do produto
 
-2 - A API recebe e valida os dados (cpf inválido, soma errada, type fora do formato)
-3 - A API salva os dados em banco
+2 - A API recebe e faz a validação os dados
+Exemplos de validação: cpf inválido, soma errada dos valores, type de produto fora do formato, data inválida
 
-4 - Após persistir os dados, agora a API irá repassar o valor do cashback para a uma API da MaisTODOS criar o cashback
+3 - A API salva os dados em banco (ou log, o importante é persistir em algum lugar)
+Para compliance vamos persistir esses dados enviados
+
+4 - Na API, será feita toda a lógica de calculo do cashback para o cliente
+
+5 - Com os valores já corretos, vamos repassar o valor do cashback para a uma API da MaisTODOS criar o cashback de fato
+
 ```curl
 curl --request POST \
   --url https://5efb30ac80d8170016f7613d.mockapi.io/api/mock/Cashback \
@@ -80,5 +98,16 @@ Com o retorno
 }
 ```
 
+Considerações finais
+--------------------
 
+O acesso à api deve ser aberto ao mundo, porém deve possuir autenticação e autorização.
+
+Você está livre para definir a melhor arquitetura e tecnologias para solucionar este desafio, todos os itens descritos nos campos são `sugestões`, mas não se esqueça de contar sua motivação no arquivo README que deve acompanhar sua solução, junto com os detalhes de como executar seu programa. Documentação e testes serão avaliados também =).
+
+Nós solicitamos que você trabalhe no desenvolvimento desse sistema sozinho e não divulgue a solução desse problema pela internet.
+
+Boa sorte, Equipe MaisTodos!
+
+![Luck](https://media.giphy.com/media/l49JHz7kJvl6MCj3G/giphy.gif)
 
