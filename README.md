@@ -69,10 +69,14 @@ Onde:
 - products -> qty: é a quantidade de cada produto
 
 2 - A API recebe e faz a validação os dados
-Exemplos de validação: cpf inválido, soma errada dos valores, type de produto fora do formato, data inválida
 
-3 - A API salva os dados em banco (ou log, o importante é persistir em algum lugar)
-Para compliance vamos persistir esses dados enviados
+Exemplos de validação:
+- cpf inválido
+- soma errada dos valores
+- type de produto fora do formato
+- data inválida
+
+3 - Para compliance vamos persistir esses dados enviados num banco de dados (ou log, o importante é persistir em algum lugar)
 
 4 - Na API, será feita toda a lógica de calculo do cashback para o cliente
 
