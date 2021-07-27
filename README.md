@@ -65,7 +65,8 @@ POST /api/cashback
 Onde:
 - customer -> document: é o cpf do cliente
 - products -> type: é a classificação do produto, você irá definir os valores mais podemos usar (A, B, C)
-- products -> type: é o valor unitário do produto
+- products -> value: é o valor unitário do produto
+- products -> qty: é a quantidade de cada produto
 
 2 - A API recebe e faz a validação os dados
 Exemplos de validação: cpf inválido, soma errada dos valores, type de produto fora do formato, data inválida
