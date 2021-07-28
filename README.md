@@ -23,22 +23,23 @@ Problema
 --------
 
 Uma grande rede varegista do ramo alimentício, irá utilizar a carteira digital da MaisTODOS para dar cashback para os seus clientes e gerar vendas campanhas, etc.
-Então basicamente vamos precisar de uma API para fazer o gerenciamento desses valores (Salvar, logs, auth) e repassar para a nossa API de cashback para dar ao cliente o valor do benefício de fato.
 
-Na API, ficaria toda a lógica de aplicação do cashback (percentual, e regras por tipo de produto)
+Então basicamente vamos precisar de uma API para fazer todo o gerenciamento desses valores e repassar para uma outra API de cashback para dar ao cliente o valor do benefício de fato.
+
+Na API, ficaria toda a lógica e controle da aplicação do cashback.
 
 Sendo responsável pelas seguintes ações:
 - Recebe os dados via API
 - Faz o processamento dos dados
 - Faz uma nova requisição para uma API externa de cashback da MaisTODOS
 
-Vamos deixar alguns modelos de API e schema, mais não são obrigatórios.
+Vamos deixar alguns modelos de API e schema mais à frente, mais não são obrigatórios.
 
 
 Fluxograma
 ----------
 
-1 - ERP do varegista chama esta API a ser construída com esta sugestão de json e url:
+1 - ERP do varegista faz a requisição nesta API a ser construída:
 
 ```
 POST /api/cashback 
