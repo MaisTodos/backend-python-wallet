@@ -27,6 +27,11 @@ Então basicamente vamos precisar de uma API para fazer o gerenciamento desses v
 
 Na API, ficaria toda a lógica de aplicação do cashback (percentual, e regras por tipo de produto)
 
+Sendo responsável pelas seguintes ações:
+1 - Recebe os dados via API
+2 - Faz o processamento dos dados
+3 - Faz uma nova requisição para uma API externa de cashback da MaisTODOS
+
 Vamos deixar alguns modelos de API e schema, mais não são obrigatórios.
 
 
@@ -76,11 +81,13 @@ Exemplos de validação:
 - type de produto fora do formato
 - data inválida
 
-3 - Para compliance vamos persistir esses dados enviados num banco de dados (ou log, o importante é persistir em algum lugar)
+3 - A API deve salvar todos os dados recebidos, para termos como conciliar posteriormente com o cliente. Bem como o retorno da API de cashback, para gestão de reenvios, etc.
 
-4 - Na API, será feita toda a lógica de calculo do cashback para o cliente
+4 - A API será responsável por todo o cálculo de cashback
 
 5 - Com os valores já corretos, vamos repassar o valor do cashback para a uma API da MaisTODOS criar o cashback de fato
+
+Seguem exemplos da requisição e resposta da API de cashback:
 
 ```curl
 curl --request POST \
