@@ -28,9 +28,9 @@ Então basicamente vamos precisar de uma API para fazer o gerenciamento desses v
 Na API, ficaria toda a lógica de aplicação do cashback (percentual, e regras por tipo de produto)
 
 Sendo responsável pelas seguintes ações:
-1 - Recebe os dados via API
-2 - Faz o processamento dos dados
-3 - Faz uma nova requisição para uma API externa de cashback da MaisTODOS
+- Recebe os dados via API
+- Faz o processamento dos dados
+- Faz uma nova requisição para uma API externa de cashback da MaisTODOS
 
 Vamos deixar alguns modelos de API e schema, mais não são obrigatórios.
 
