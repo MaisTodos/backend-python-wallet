@@ -27,6 +27,9 @@ Uma grande rede varegista do ramo alimentício, irá utilizar a carteira digital
 Então basicamente vamos precisar de uma API para fazer todo o gerenciamento desses valores e repassar para uma outra API de cashback para dar ao cliente o valor do benefício de fato.
 
 Na API, ficaria toda a lógica e controle da aplicação do cashback.
+Fique livre para definir a regra de aplicação
+- Ex: 10% do valor total
+- Ex2: Fazer por type de produto, tipo A possui 5% e tipo B possui 15%
 
 Sendo responsável pelas seguintes ações:
 - Recebe os dados via API
@@ -52,7 +55,7 @@ POST /api/cashback
        "document": "00000000000",
        "name": "JOSE DA SILVA",
     },
-    "total": "1000.00",
+    "total": "100.00",
     "products": [
        {
           "type": "A",
@@ -84,11 +87,11 @@ Exemplos de validação:
 
 3 - A API deve salvar todos os dados recebidos, para termos como conciliar posteriormente com o cliente. Bem como o retorno da API de cashback, para gestão de reenvios, etc.
 
-4 - A API será responsável por todo o cálculo de cashback
+4 - A API será responsável por todo o cálculo de cashback (Fique livre para definir as regras)
 
-5 - Com os valores já corretos, vamos repassar o valor do cashback para a uma API da MaisTODOS criar o cashback de fato
+5 - Com os valores já corretos, vamos repassar o valor do cashback para uma API da MaisTODOS criar o cashback de fato
 
-Seguem exemplos da requisição e resposta da API de cashback:
+Seguem exemplos da requisição e resposta da API externa da MaisTODOS de cashback:
 
 ```curl
 curl --request POST \
