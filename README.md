@@ -93,6 +93,13 @@ Exemplos de validação:
 
 Seguem exemplos da requisição e resposta da API externa da MaisTODOS de cashback:
 
+```
+URL: https://5efb30ac80d8170016f7613d.mockapi.io/api/mock/Cashback
+Método: POST
+Data: document -> Cpf do cliente
+      cashback -> valor calculado
+
+
 ```curl
 curl --request POST \
   --url https://5efb30ac80d8170016f7613d.mockapi.io/api/mock/Cashback \
