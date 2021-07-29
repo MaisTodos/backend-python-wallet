@@ -100,6 +100,8 @@ Data: document -> Cpf do cliente
       cashback -> valor calculado
 ```
 
+Exemplo com o curl
+
 ```curl
 curl --request POST \
   --url https://5efb30ac80d8170016f7613d.mockapi.io/api/mock/Cashback \
@@ -110,7 +112,8 @@ curl --request POST \
 }'
 ```
 
-Com o retorno
+Retorno da api:
+
 ```json
 {
   "createdAt": "2021-07-26T22:50:55.740Z",
