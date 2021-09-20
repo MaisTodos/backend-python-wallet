@@ -42,6 +42,8 @@ services:
       - .:/code
     restart: always
     env_file: .env
+    # entrypoint: /code/entrypoint.sh
+    entrypoint: ["sh", "/code/entrypoint.sh"]
     ports:
       - "${HOST}:${DJANGO_PORT}:8000"
     networks:
