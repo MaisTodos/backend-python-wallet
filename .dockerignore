@@ -1,0 +1,13 @@
+.gitignore
+LICENSE
+README.md
+.cnf
+.vscode/
+
+# Ignore file/folders of tests
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+*.pytest_cache
