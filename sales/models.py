@@ -13,13 +13,11 @@ class Customer():
         return self.user.username
 
 class Product():
-    # Sistema de Classificação Aspinwall : https://pt.wikipedia.org/wiki/Produto_(marketing)
+    # Sistema de Classificação ABC : http://blog.comercialigara.com.br/curva-abc-estoque-supermercado
     TYPE = [
-        ('A', _('Replacement Fee')),
-        ('B', _('Gross Margin')),
-        ('C', _('Buyer Goal Setting')),
-        ('D', _('Duration of Product Satisfaction')),
-        ('E', _('Duration of Buyer Search Behavior')),
+        ('A', _('High Priority')),
+        ('B', _('Medium Priority')),
+        ('C', _('Low Priority')),
     ]
 
     product_type = models.PositiveSmallIntegerField(choices=TYPE, verbose_name=_("Type"), default=0, null=False)
@@ -28,8 +26,18 @@ class Product():
 
     def __str__(self):
         return self.product_type + " : " + self.value + " : " + self.qty
+    
+    @property
+    def total_by_product(self):
+        return self.value * self.qty
 
 class CashBack():
+    CASHBACK = [
+        ('A', 0.15),
+        ('B', 0.10),
+        ('C', 0),
+    ]
+
     sold_at = models.DateTimeField(default=timezone.now, verbose_name=_("Sale Date"))
     total = models.DecimalField(max_digits=10, verbose_name=_("Total"), decimal_places=2, null=False)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name=_("Customer"))
@@ -38,10 +46,11 @@ class CashBack():
     def __str__(self):
         return self.customer.user.username + " : " + str(self.total)
     
-    # def cashback(self):
-    #     for i in self.products.all():
-    #         if i.product_type == 'A':
-    #             return self.total * 0.05
+    def cashback(self):
+        discount = 0
+        for i in self.products.all():
+            discount += i.total_by_product * self.CASHBACK[i.product_type]
+        return discount
     
     def clean(self):
         if self.total < 0:
