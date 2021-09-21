@@ -143,8 +143,6 @@ MANAGERS = config("MANAGERS")
 
 LOGIN_REDIRECT_URL = '/'
 
-# AUTH_USER_MODEL = 'blog.User'
-
 
 if DEBUG:
     # # tricks to have debug toolbar when developing with docker
