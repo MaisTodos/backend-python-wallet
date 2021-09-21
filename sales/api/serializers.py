@@ -11,10 +11,11 @@ class ProductSerializer(serializers.ModelSerializer):
         model = models.Product
         fields = ['product_type', 'value', 'qty']
 
-class CahsBackSerializer(serializers.ModelSerializer):
+class CashBackSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Article
+        model = models.CashBack
         fields = ['sold_at', 'total']
+        # fields = ['sold_at', 'total', 'customer', 'products']
 
 
 
