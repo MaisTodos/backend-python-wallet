@@ -4,6 +4,13 @@
 echo "INSTALL NEW REQUIREMENTS"
 pip install -r requirements.txt
 
+# Create static folder if not exists to avoid error
+mkdir -p static
+# STATIC_DIR="$(pwd)/static/"
+# if [! -d "$STATIC_DIR" ]; then
+#   echo "CREATING STATIC FILES DIRETORY"
+# fi
+
 # Collect static files
 echo "COLLECT STATIC FILES"
 python manage.py collectstatic --noinput

@@ -157,3 +157,5 @@ coverage.xml
 **/migrations/**
 !**/migrations
 !**/migrations/__init__.py
+
+static/

@@ -5,14 +5,14 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 
-class Customer():
+class Customer(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("Customer"))
     document = models.CharField(verbose_name=_("CPF"), max_length=20, unique=True)
 
     def __str__(self):
         return self.user.username
 
-class Product():
+class Product(models.Model):
     # Sistema de Classificação ABC : http://blog.comercialigara.com.br/curva-abc-estoque-supermercado
     TYPE = [
         ('A', _('High Priority')),
@@ -31,7 +31,7 @@ class Product():
     def total_by_product(self):
         return self.value * self.qty
 
-class CashBack():
+class CashBack(models.Model):
     CASHBACK = [
         ('A', 0.15),
         ('B', 0.10),
