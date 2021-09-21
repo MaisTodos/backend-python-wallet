@@ -3,13 +3,16 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.core.validators import MinLengthValidator
+
 
 class Customer(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("Customer"))
-    document = models.CharField(verbose_name=_("CPF"), max_length=20, unique=True)
+    name = models.CharField(verbose_name=_("Name"), max_length=50)
+    document = models.CharField(verbose_name=_("CPF"), max_length=11, unique=True, validators=[MinLengthValidator(11)])
 
     def __str__(self):
-        return self.user.username
+        return self.name
 
 class Product(models.Model):
     # Sistema de Classificação ABC : http://blog.comercialigara.com.br/curva-abc-estoque-supermercado
@@ -37,10 +40,10 @@ class CashBack(models.Model):
         ('C', 0),
     ]
 
-    sold_at = models.DateTimeField(default=timezone.now, verbose_name=_("Sale Date"))
-    total = models.DecimalField(max_digits=10, verbose_name=_("Total"), decimal_places=2, null=False)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name=_("Customer"))
     products = models.ManyToManyField(Product, verbose_name=_("Products"))
+    sold_at = models.DateTimeField(default=timezone.now, verbose_name=_("Sale Date"))
+    total = models.DecimalField(max_digits=10, verbose_name=_("Total"), decimal_places=2, null=False)
 
     def __str__(self):
         return self.customer.user.username + " : " + str(self.total)
