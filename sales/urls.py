@@ -3,6 +3,7 @@ from rest_framework import routers
 from django.conf.urls import include
 from sales.api import viewsets
 from rest_framework.authtoken import views
+from sales.views import maistodos
 
 app_name = 'sales'
 

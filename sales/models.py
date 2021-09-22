@@ -22,12 +22,12 @@ class Product(models.Model):
         (2, _('Class C - Low Priority')),
     ]
 
-    ptype = models.PositiveSmallIntegerField(choices=TYPE, verbose_name=_("Type"), default=0, null=False)
+    type = models.PositiveSmallIntegerField(choices=TYPE, verbose_name=_("Type"), default=0, null=False)
     value = models.DecimalField(max_digits=10, verbose_name=_("Value"), decimal_places=2, null=False)
     qty = models.PositiveIntegerField(null=False, verbose_name=_("Quantity"))
 
     def __str__(self):
-        return self.TYPE[self.ptype][-1] + " : " + str(self.value) + " : " + str(self.qty)
+        return self.TYPE[self.type][-1] + " : " + str(self.value) + " : " + str(self.qty)
     
     @property
     def total_by_product(self):
