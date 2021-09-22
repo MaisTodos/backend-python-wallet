@@ -25,8 +25,8 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ProductSerializer
     queryset = models.Product.objects.all()
     filter_backends =  (SearchFilter, DjangoFilterBackend)
-    filter_fields = ('product_type', 'value', 'qty')
-    search_fields = ('product_type', 'value', 'qty')
+    filter_fields = ('type', 'value', 'qty')
+    search_fields = ('type', 'value', 'qty')
 
 class CashBackViewSet(viewsets.ModelViewSet):
     CASHBACK = {
