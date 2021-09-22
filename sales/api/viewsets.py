@@ -35,14 +35,3 @@ class CashBackViewSet(viewsets.ModelViewSet):
     filter_backends =  (SearchFilter, DjangoFilterBackend)
     filter_fields = ('sold_at', 'total')
     search_fields = ('sold_at', 'total')
-
-
-
-    # def create(self, request, *args, **kwargs):
-    #     total = self.compute_total(request.data['products'])
-    #     cashback = self.cashback(request.data['products'])
-    #     total -= cashback
-
-    #     request.data['total'] = total
-
-    #     return super().create(request, *args, **kwargs)

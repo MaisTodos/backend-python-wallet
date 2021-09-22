@@ -9,7 +9,7 @@ from django.core.validators import MinLengthValidator
 class Customer(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("Customer"))
     name = models.CharField(verbose_name=_("Name"), max_length=50)
-    document = models.CharField(verbose_name=_("CPF"), max_length=11, unique=True, validators=[MinLengthValidator(11)])
+    document = models.CharField(verbose_name=_("CPF"), max_length=11, validators=[MinLengthValidator(11)])
 
     def __str__(self):
         return self.user.username + " : " + self.name
@@ -27,7 +27,7 @@ class Product(models.Model):
     qty = models.PositiveIntegerField(null=False, verbose_name=_("Quantity"))
 
     def __str__(self):
-        return self.TYPE[self.product_type][-1] + " : " + str(self.value) + " : " + str(self.qty)
+        return self.TYPE[self.ptype][-1] + " : " + str(self.value) + " : " + str(self.qty)
     
     @property
     def total_by_product(self):
@@ -45,7 +45,3 @@ class CashBack(models.Model):
     def clean(self):
         if self.total < 0:
             raise ValidationError(_("The total amount cannot be negative"))
-        
-    # def save(self, *args, **kwargs):
-    #     self.clean()
-    #     super().save(*args, **kwargs)
