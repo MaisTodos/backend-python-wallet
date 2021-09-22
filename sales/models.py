@@ -12,48 +12,40 @@ class Customer(models.Model):
     document = models.CharField(verbose_name=_("CPF"), max_length=11, unique=True, validators=[MinLengthValidator(11)])
 
     def __str__(self):
-        return self.name
+        return self.user.username + " : " + self.name
 
 class Product(models.Model):
     # Sistema de Classificação ABC : http://blog.comercialigara.com.br/curva-abc-estoque-supermercado
     TYPE = [
-        ('A', _('High Priority')),
-        ('B', _('Medium Priority')),
-        ('C', _('Low Priority')),
+        (0, _('Class A - High Priority')),
+        (1, _('Class B - Medium Priority')),
+        (2, _('Class C - Low Priority')),
     ]
 
-    product_type = models.PositiveSmallIntegerField(choices=TYPE, verbose_name=_("Type"), default=0, null=False)
+    ptype = models.PositiveSmallIntegerField(choices=TYPE, verbose_name=_("Type"), default=0, null=False)
     value = models.DecimalField(max_digits=10, verbose_name=_("Value"), decimal_places=2, null=False)
     qty = models.PositiveIntegerField(null=False, verbose_name=_("Quantity"))
 
     def __str__(self):
-        return self.product_type + " : " + self.value + " : " + self.qty
+        return self.TYPE[self.product_type][-1] + " : " + str(self.value) + " : " + str(self.qty)
     
     @property
     def total_by_product(self):
         return self.value * self.qty
 
 class CashBack(models.Model):
-    CASHBACK = [
-        ('A', 0.15),
-        ('B', 0.10),
-        ('C', 0),
-    ]
-
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name=_("Customer"))
     products = models.ManyToManyField(Product, verbose_name=_("Products"))
     sold_at = models.DateTimeField(default=timezone.now, verbose_name=_("Sale Date"))
-    total = models.DecimalField(max_digits=10, verbose_name=_("Total"), decimal_places=2, null=False)
+    total = models.DecimalField(max_digits=10, verbose_name=_("Total"), default=0, decimal_places=2, null=False)
 
     def __str__(self):
-        return self.customer.user.username + " : " + str(self.total)
-    
-    def cashback(self):
-        discount = 0
-        for i in self.products.all():
-            discount += i.total_by_product * self.CASHBACK[i.product_type]
-        return discount
-    
+        return self.customer.name + " : " + str(self.total)
+
     def clean(self):
         if self.total < 0:
             raise ValidationError(_("The total amount cannot be negative"))
+        
+    # def save(self, *args, **kwargs):
+    #     self.clean()
+    #     super().save(*args, **kwargs)

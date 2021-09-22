@@ -2,12 +2,16 @@ from sales import models
 from rest_framework import serializers
 from django.core import validators
 from validate_docbr import CPF
+from decimal import Decimal
 
 
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Customer
         fields = ['user', 'document', 'name']
+        extra_kwargs = {
+            "user": {"read_only": True},
+        }
     
     def create(self, validated_data):
         document = CPF()
@@ -21,15 +25,57 @@ class CustomerSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Product
-        fields = ['product_type', 'value', 'qty']
+        fields = ['ptype', 'value', 'qty']
 
 class CashBackSerializer(serializers.ModelSerializer):
-    customer = CustomerSerializer(many=True)
+    CASHBACK = {
+        'A': 0.15,
+        'B': 0.10,
+        'C': 0,
+    }
+
+    customer = CustomerSerializer()
     products = ProductSerializer(many=True)
+
     class Meta:
         model = models.CashBack
         fields = ['sold_at', 'total', 'customer', 'products']
+        extra_kwargs = {
+            "sold_at": {"read_only": True},
+            "total": {"read_only": True},
+        }
+    
+    def cashback(self, products):
+        cash = 0
+        for product in products:
+            total_by_product = float(product.get('value') * product.get('qty'))
+            cash += total_by_product * self.CASHBACK[['A', 'B', 'C'][product.get('ptype')]]
+        return Decimal(cash)
 
+    def compute_total(self, products):
+        total = 0
+        for product in products:
+            total += product.get('value') * product.get('qty')
+        return total
+    
+    def set_products(self, products, cashback):
+        for product in products:
+            obj = models.Product.objects.create(**product)
+            cashback.products.add(obj)
+    
+    def create(self, validated_data):
+        total = self.compute_total(validated_data['products'])
+        cashback = self.cashback(validated_data['products'])
+        total -= cashback
+        validated_data['total'] = total
 
+        customer = validated_data['customer']
+        customer['user'] = self.context['request'].user
+        customer, created = models.Customer.objects.get_or_create(**customer)
+        validated_data['customer'] = customer
+        
+        products = validated_data.pop('products')
+        cashback = models.CashBack.objects.create(**validated_data)
+        self.set_products(products, cashback)
 
-
+        return cashback
