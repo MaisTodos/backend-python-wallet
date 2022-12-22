@@ -13,8 +13,8 @@ Alguns requisitos
   - Deixe o código em inglês;
   - Use Git;
   - Procure fazer `micro commits` que são muitos commits com menos código isso nos ajuda a compreender a sua lógica;
-  - Pergunte nos sobre qualquer dúvida que venha a surgir durante o desenvolvimento;
-  - Documente detalhadamente quaisquer referencias/ferramentas que vc pesquisar;
+  - Pergunte-nos sobre qualquer dúvida que venha a surgir durante o desenvolvimento;
+  - Documente detalhadamente quaisquer referencias/ferramentas que você pesquisar;
   - Crie um repositório público e nos passe o link para acompanharmos o desenvolvimento;
   - Faça testes;
 
@@ -22,21 +22,23 @@ Alguns requisitos
 Problema
 --------
 
-Uma grande rede varegista do ramo alimentício, irá utilizar a carteira digital da MaisTODOS para dar cashback para os seus clientes e gerar vendas campanhas, etc.
+Uma grande rede varejista do ramo alimentício, irá utilizar a carteira digital da MaisTODOS para dar cashback para os seus clientes e gerar vendas campanhas, etc.
 
-Então basicamente vamos precisar de uma API para fazer todo o gerenciamento desses valores e repassar para uma outra API de cashback para dar ao cliente o valor do benefício de fato.
+Então, basicamente vamos precisar de uma API para fazer todo o gerenciamento desses valores e repassar para uma outra API de cashback para dar ao cliente o valor do benefício de fato.
 
 Na API, ficaria toda a lógica e controle da aplicação do cashback.
-Fique livre para definir a regra de aplicação
-- Ex: 10% do valor total
-- Ex2: Fazer por type de produto, tipo A possui 5% e tipo B possui 15%
 
 Sendo responsável pelas seguintes ações:
 - Recebe os dados via API
 - Faz o processamento dos dados
 - Faz uma nova requisição para uma API externa de cashback da MaisTODOS
 
-Vamos deixar alguns modelos de API e schema mais à frente, mais não são obrigatórios.
+
+Fique livre para definir a regra de aplicação
+- Ex: 10% do valor total
+- Ex2: Fazer por tipe de produto, tipo A possui 5% e tipo B possui 15%
+
+Vamos deixar alguns modelos de API e `schema` mais à frente, porém são opcionais.
 
 
 Fluxograma
@@ -45,7 +47,7 @@ Fluxograma
 1 - ERP do varegista faz a requisição nesta API a ser construída:
 
 ```
-POST /api/cashback 
+POST /api/cashback
 ```
 
 ```shell
@@ -85,7 +87,7 @@ Exemplos de validação:
 - type de produto fora do formato
 - data inválida
 
-3 - A API deve salvar todos os dados recebidos, para termos como conciliar posteriormente com o cliente. Bem como o retorno da API de cashback, para gestão de reenvios, etc.
+3 - A API deve salvar todos os dados recebidos, para termos como conciliar posteriormente com o cliente. Salvar também o retorno da API de cashback, para gestão de reenvios, etc.
 
 4 - A API será responsável por todo o cálculo de cashback (Fique livre para definir as regras)
 
@@ -127,13 +129,15 @@ Retorno da api:
 Considerações finais
 --------------------
 
-O acesso à api deve ser aberto ao mundo, porém deve possuir autenticação e autorização.
+O acesso à API deve ser aberto ao mundo, porém deve possuir autenticação e autorização.
 
-Você está livre para definir a melhor arquitetura e tecnologias para solucionar este desafio, todos os itens descritos nos campos são `sugestões`, mas não se esqueça de contar sua motivação no arquivo README que deve acompanhar sua solução, junto com os detalhes de como executar seu programa. Documentação e testes serão avaliados também =).
+Você está livre para definir a melhor arquitetura e tecnologias para solucionar este desafio. Todos os itens descritos nos campos são `sugestões`, mas não se esqueça de contar sua motivação no arquivo `README` que deve acompanhar sua solução, junto com os detalhes de como executar seu programa. Documentação e testes serão avaliados também =).
 
 Nós solicitamos que você trabalhe no desenvolvimento desse sistema sozinho e não divulgue a solução desse problema pela internet.
 
-Boa sorte, Equipe MaisTodos!
+Boa sorte!
+
+Equipe MaisTodos
 
 ![Luck](https://media.giphy.com/media/l49JHz7kJvl6MCj3G/giphy.gif)
 
