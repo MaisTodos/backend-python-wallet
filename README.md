@@ -44,7 +44,7 @@ Vamos deixar alguns modelos de API e `schema` mais à frente, porém são opcion
 Fluxograma
 ----------
 
-1 - ERP do varegista faz a requisição nesta API a ser construída:
+1 - ERP do varejista faz a requisição nesta API a ser construída:
 
 ```
 POST /api/cashback
