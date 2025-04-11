@@ -24,16 +24,31 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
+      - name: Download SonarScanner
+        run: |
+          curl -sSL -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+          if [ ! -s sonar-scanner.zip ]; then
+            echo "Erro: O arquivo sonar-scanner.zip está vazio ou não foi baixado corretamente."
+            exit 1
+          fi
+          # Verifica se o arquivo é um ZIP válido
+          if ! unzip -t sonar-scanner.zip >/dev/null 2>&1; then
+            echo "Erro: O arquivo sonar-scanner.zip não é um ZIP válido."
+            exit 1
+          fi
+
+      - name: Extract SonarScanner
+        run: |
+          unzip -o sonar-scanner.zip
+          chmod +x sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner
+          export PATH=$PATH:$PWD/sonar-scanner-5.0.1.3006-linux/bin
+
       - name: Run SonarQube Scan
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
-          curl -sSL https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610-linux.zip -o sonar-scanner.zip
-          unzip -o sonar-scanner.zip
-          chmod +x sonar-scanner-6.2.1.4610-linux/bin/sonar-scanner
-          export PATH=$PATH:$PWD/sonar-scanner-6.2.1.4610-linux/bin
           sonar-scanner \
             -Dsonar.projectKey=MaisTodos.backend-python-wallet \
             -Dsonar.sources=. \
